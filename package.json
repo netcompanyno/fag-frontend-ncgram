@@ -95,6 +95,8 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "redux-devtools": "^3.4.1"
+    "node-sass": "^4.9.0",
+    "redux-devtools": "^3.4.1",
+    "sass-loader": "^7.0.3"
   }
 }
