@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import EksempelModule from "./module/eksempel-module";
+// import EksempelModule from "./module/eksempel-module";
+import Feed from "./module/components/Feed";
 
 class App extends Component {
   render() {
@@ -15,7 +16,10 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
 
-        <EksempelModule></EksempelModule>
+        {/*<EksempelModule></EksempelModule>*/}
+        <Feed title={"test"} description={"test desc"} clickEvent = {function(){alert("clicked")}}>
+
+        </Feed>
       </div>
     );
   }
