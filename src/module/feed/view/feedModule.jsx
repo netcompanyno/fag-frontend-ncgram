@@ -1,32 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'uuid';
 import '../style/style.scss';
-import Image from "../components/image/image";
-import LikeHeart from "../components/likeHeart/likeHeart";
+import CardItem from "../components/card/cardItem";
 
-const feedModule = ({ title, description, clickEvent }) => (
-  <div className="card">
-    <div className="container">
-      <span>
-        <h4><b>{title}</b></h4>
-        <Image />
-        <p>{description}</p>
-        <LikeHeart />
-        <button type="button" onClick={clickEvent}>Click Me!</button>
-      </span>
-    </div>
-  </div>
-);
-
+const feedModule = ({ title, description, clickEvent, fetchData, posts }) => {
+    console.log(posts);
+    return (
+        <span>
+        {posts.map((item) => <CardItem key={uuid()}
+                                          title={item.title}
+                                          description={item.content}
+                                          imgSrc={item.imageUrl}
+                                          fetchData={fetchData} />)}
+        </span>
+    );
+};
 
 feedModule.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.string,
+    title : PropTypes.string,
+    description : PropTypes.string,
 };
 
 feedModule.defaultProps = {
-  title: '',
-  description: '',
+    title : '',
+    description : '',
 };
 
 export default feedModule;
