@@ -1,19 +1,18 @@
 import React from 'react';
-import logo from '../../../../logo.svg';
+import { Classes } from "@blueprintjs/core";
+import NC_logo from '../../../../NC_Logo.jpg';
 
-const Image = (imgSrc) => {
-    let imageSource = logo;
-    if (imgSrc.imgSrc !== "") {
-        imageSource = imgSrc.imgSrc;
+const Image = ({imgSrc, loading}) => {
+    let imageSource = NC_logo;
+    if (imgSrc !== "") {
+        imageSource = imgSrc;
     }
 
-    console.log(imageSource)
-
     return (
-        <div>
+        <div className={loading ? Classes.SKELETON : undefined}>
             <img src={imageSource} className="image-size" alt="logo" />
         </div>
     );
-}
+};
 
 export default Image;

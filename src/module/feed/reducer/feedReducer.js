@@ -1,9 +1,17 @@
-import { BUTTON_PRESS, RECEIVE_POSTS, ITEMS_IS_LOADING, FETCH_HAS_ERROR } from "../types/feedTypes";
+import {
+    RECEIVE_POSTS,
+    ITEMS_IS_LOADING,
+    FETCH_HAS_ERROR,
+    ADD_LIKE,
+    ADD_COMMENT,
+    UPDATE_COMMENT
+} from "../types/feedTypes";
 
 const defaultState = {
     test : 'test',
     isLoading : false,
     hasError : false,
+    commentHolder : "",
     posts : [
         {
             id : 991,
@@ -12,7 +20,13 @@ const defaultState = {
             sender : "auduns",
             imageUrl : "",
             timestamp : "2018-04-28T12:33:36+0000",
-            statusList : []
+            statusList : [],
+            comments : [
+                {
+                    shortName : "daniels",
+                    comment : "blablabla"
+                }
+            ]
         },
         {
             id : 992,
@@ -48,9 +62,30 @@ const defaultState = {
                         profileImageUrl : "https://s3-eu-west-1.amazonaws.com/faghelg/thomasp.png"
                     },
                     statusType : "STAR"
-                } ]
+                } ],
+            comments : [
+                {
+                    shortName : "daniels",
+                    comment : "blablabla"
+                }
+            ]
         },
     ],
+};
+
+const getPost = (state, action) => {
+    return state.posts.find(el => el.id === action.id);
+};
+
+const insertIntoPost = (postsInState, postToInsert) => {
+    let copyOfPosts = postsInState;
+
+    copyOfPosts.forEach((element, index) => {
+        if (element.id === postToInsert.id) {
+            copyOfPosts[ index ] = postToInsert;
+        }
+    });
+    return copyOfPosts;
 };
 
 const feedReducer = (state = defaultState, action) => {
@@ -66,28 +101,77 @@ const feedReducer = (state = defaultState, action) => {
         case FETCH_HAS_ERROR: {
             return {
                 ...state,
-                hasError : action.hasError
+                hasError : action.hasError,
+                errorMessage : action.error
             }
         }
 
-        case BUTTON_PRESS: {
-            alert("State har nå oppdatert seg");
-            return {
-                ...state,
-                nyStateProp : "hei sveis"
-            }
-        }
         case RECEIVE_POSTS: {
-            console.log("kek");
+            console.log("json payload", action.payload)
             return {
                 ...state,
                 posts : action.payload
             }
         }
 
+        case ADD_COMMENT: {
+            const post = getPost(state, action);
+            const shortName = "username";
+            console.log(post)
+            'comments' in post ?
+            post.comments.push({ shortName : shortName, comment : state.commentHolder }) :
+            post[ 'comments' ] = [ { shortName : "username", comment : state.commentHolder } ];
+            const updatedPosts = insertIntoPost(state.posts, post);
+
+            return {
+                ...state,
+                posts : [
+                    ...updatedPosts
+                ]
+            }
+        }
+
+        case
+            ADD_LIKE: {
+                const test = getPost(state, action);
+
+                test.statusList.push(
+                    {
+                        messageId : 546,
+                        person : {
+                            fullName : "Thomas Pettersen",
+                            shortName : "thomasp",
+                            profileImageUrl : "https://s3-eu-west-1.amazonaws.com/faghelg/thomasp.png"
+                        },
+                        statusType : action.icon
+                    }
+                );
+                // console.log("action.id", action.id);
+                // console.log(test);
+
+                const updatedPosts = insertIntoPost(state.posts, test);
+
+                return {
+                    ...state,
+                    posts : [
+                        ...updatedPosts
+
+                    ]
+                }
+            }
+
+        case
+            UPDATE_COMMENT : {
+                return {
+                    ...state,
+                    commentHolder : action.payload
+                }
+            }
+
         default:
             return state;
+        }
     }
-};
+    ;
 
-export default feedReducer;
+    export default feedReducer;

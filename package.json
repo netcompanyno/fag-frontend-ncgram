@@ -5,6 +5,7 @@
   "dependencies": {
     "@blueprintjs/core": "^3.2.0",
     "autoprefixer": "7.1.6",
+    "axios": "^0.18.0",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
@@ -98,7 +99,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.9.2",
     "redux-devtools": "^3.4.1",
     "redux-devtools-extension": "^2.13.5",
     "sass-loader": "^7.0.3"

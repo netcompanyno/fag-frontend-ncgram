@@ -1,76 +1,104 @@
-import { BUTTON_PRESS, RECEIVE_POSTS, ITEMS_IS_LOADING, FETCH_HAS_ERROR } from '../types/feedTypes';
+import axios from 'axios';
+import {
+    ADD_COMMENT,
+    ADD_LIKE,
+    FETCH_HAS_ERROR,
+    ITEMS_IS_LOADING,
+    RECEIVE_POSTS,
+    UPDATE_COMMENT
+} from '../types/feedTypes';
 
-export const addNewMovie = () =>
+export const receivePosts = json =>
     ({
-        type : BUTTON_PRESS,
+        type : RECEIVE_POSTS,
+        payload : json
     });
 
-function receivePosts(json) {
-    return {
-        type : RECEIVE_POSTS,
-        payload : json.data.children.map(child => child.data),
-        receivedAt : Date.now()
-    }
-}
+export const addLike = (id, icon) =>
+    ({
+        type : ADD_LIKE,
+        id : id,
+        icon : icon
+    });
 
-export const fetchAllPosts = (dispatch) => {
-    fetch("https://faghelg.herokuapp.com/messages")
-        .then(response => response.json())
-        .then(json => dispatch(receivePosts(json)))
-};
-
-export function itemsHasError(bool) {
-    return {
+export const itemsHasError = (bool, error) =>
+    ({
         type : FETCH_HAS_ERROR,
-        hasError : bool
-    };
-}
+        hasError : bool,
+        error : error
+    });
 
-export function itemsIsLoading(bool) {
+export const itemsIsLoading = (bool) => {
     return {
         type : ITEMS_IS_LOADING,
         isLoading : bool
     };
-}
+};
 
-export function fetchMessagesData() {
+export const updateComment = (comment) =>
+    ({
+        type : UPDATE_COMMENT,
+        payload : comment
+    });
+
+export const addComment = (id) =>
+    ({
+        type : ADD_COMMENT,
+        id : id
+    });
+
+export const fetchAllPosts = (dispatch) => {
+    axios.get("https://faghelg.herokuapp.com/messages")
+         .then(response => response.json())
+         .then(json => dispatch(receivePosts(json)))
+};
+
+export const fetchMessagesData = () => {
     const url = "https://faghelg.herokuapp.com/messages";
     return (dispatch) => {
-        console.log("dispatch start")
         dispatch(itemsIsLoading(true));
-        fetch(url, {
-            method : 'GET',
-            headers : {
-               credentials: 'include',
-            }})
-            .then((response) => {
-                console.log(response)
+        axios.get(url)
+             .then((response) => {
+                 const size = 20;
+                 const data = response.data.slice(0, size);
+                 console.log("data", pagination(3, data));
 
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                dispatch(itemsIsLoading(false));
-                return response;
-            })
-            .then((response) => response.json())
-            .then((items) => dispatch(receivePosts(items)))
-            .catch(() => dispatch(itemsHasError(true)));
+                 dispatch(receivePosts(data));
+             })
+             .catch(error => dispatch(itemsHasError(true, error)))
+             .then(function() {
+                 dispatch(itemsIsLoading(false));
+             });
     };
-}
+};
 
-// export function fetchOffers() {
-//   return function action(dispatch) {
-//     dispatch({ type: FETCH_OFFERS })
-//
-//     const request = axios({
-//       method: 'GET',
-//       url: `${BASE_URL}/offers`,
-//       headers: []
-//     });
-//
-//     return request.then(
-//       response => dispatch(fetchOffersSuccess(response)),
-//       err => dispatch(fetchOffersError(err))
-//     );
-//   }
-// }
+function pagination(c, m) {
+    let current = c,
+        last = m,
+        delta = 2,
+        left = current - delta,
+        right = current + delta + 1,
+        range = [],
+        rangeWithDots = [],
+        l;
+
+    console.log("last",last);
+    for (let i = 1; i <= last; i++) {
+        if (i === 1 || i === last || (i >= left && i < right)) {
+            range.push(i);
+        }
+    }
+
+    for (let i of range) {
+        if (l) {
+            if (i - l === 2) {
+                rangeWithDots.push(l + 1);
+            } else if (i - l !== 1) {
+                rangeWithDots.push('...');
+            }
+        }
+        rangeWithDots.push(i);
+        l = i;
+    }
+    return rangeWithDots;
+}

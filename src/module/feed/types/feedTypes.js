@@ -1,5 +1,7 @@
-export const BUTTON_PRESS = 'BUTTON_PRESS';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const ITEMS_IS_LOADING = 'ITEMS_IS_LOADING';
 export const FETCH_HAS_ERROR = 'FETCH_HAS_ERROR';
+export const ADD_LIKE = 'ADD_LIKE';
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 

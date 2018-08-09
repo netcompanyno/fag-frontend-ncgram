@@ -8,7 +8,6 @@ import { fetchMessagesData } from "./module/feed/actions/feedAction";
 class App extends Component {
 
     componentWillMount() {
-        console.log("nå skjer det");
         this.props.fetchMessagesData();
     }
 
