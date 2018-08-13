@@ -73,12 +73,10 @@ const defaultState = {
     ],
 };
 
-const getPost = (state, action) => {
-    return state.posts.find(el => el.id === action.id);
-};
+const getPost = (state, id) => state.posts.find(el => el.id === id);
 
 const insertIntoPost = (postsInState, postToInsert) => {
-    let copyOfPosts = postsInState;
+    let copyOfPosts = [...postsInState];
 
     copyOfPosts.forEach((element, index) => {
         if (element.id === postToInsert.id) {
@@ -89,54 +87,54 @@ const insertIntoPost = (postsInState, postToInsert) => {
 };
 
 const feedReducer = (state = defaultState, action) => {
-    switch (action.type) {
+        switch (action.type) {
 
-        case ITEMS_IS_LOADING: {
-            return {
-                ...state,
-                isLoading : action.isLoading
+            case ITEMS_IS_LOADING: {
+                return {
+                    ...state,
+                    isLoading : action.isLoading
+                }
             }
-        }
 
-        case FETCH_HAS_ERROR: {
-            return {
-                ...state,
-                hasError : action.hasError,
-                errorMessage : action.error
+            case FETCH_HAS_ERROR: {
+                return {
+                    ...state,
+                    hasError : action.hasError,
+                    errorMessage : action.error
+                }
             }
-        }
 
-        case RECEIVE_POSTS: {
-            console.log("json payload", action.payload)
-            return {
-                ...state,
-                posts : action.payload
+            case RECEIVE_POSTS: {
+                console.log("json payload", action.payload)
+                return {
+                    ...state,
+                    posts : action.payload
+                }
             }
-        }
 
-        case ADD_COMMENT: {
-            const post = getPost(state, action);
-            const shortName = "username";
-            console.log(post)
-            'comments' in post ?
-            post.comments.push({ shortName : shortName, comment : state.commentHolder }) :
-            post[ 'comments' ] = [ { shortName : "username", comment : state.commentHolder } ];
-            const updatedPosts = insertIntoPost(state.posts, post);
+            case ADD_COMMENT: {
+                let post = getPost(state, action.id);
+                const shortName = "username";
+                let copyOfPost = {...post};
+                console.log('copyOfPost', copyOfPost);
+                'comments' in copyOfPost ?
+                copyOfPost.comments = [...copyOfPost.comments,{ shortName : shortName, comment : state.commentHolder }] :
+                    copyOfPost[ 'comments' ] = [ { shortName : "username", comment : state.commentHolder } ];
+                const updatedPosts = insertIntoPost(state.posts, copyOfPost);
 
-            return {
-                ...state,
-                posts : [
-                    ...updatedPosts
-                ]
+                return {
+                    ...state,
+                    posts : [
+                        ...updatedPosts
+                    ]
+                }
             }
-        }
 
-        case
+            case
             ADD_LIKE: {
-                const test = getPost(state, action);
+                const test = {...getPost(state, action.id)};
 
-                test.statusList.push(
-                    {
+                test.statusList = [...test.statusList, {
                         messageId : 546,
                         person : {
                             fullName : "Thomas Pettersen",
@@ -144,8 +142,8 @@ const feedReducer = (state = defaultState, action) => {
                             profileImageUrl : "https://s3-eu-west-1.amazonaws.com/faghelg/thomasp.png"
                         },
                         statusType : action.icon
-                    }
-                );
+                    }];
+
                 // console.log("action.id", action.id);
                 // console.log(test);
 
@@ -160,18 +158,17 @@ const feedReducer = (state = defaultState, action) => {
                 }
             }
 
-        case
-            UPDATE_COMMENT : {
+            case UPDATE_COMMENT : {
                 return {
                     ...state,
                     commentHolder : action.payload
                 }
             }
 
-        default:
-            return state;
+            default:
+                return state;
         }
     }
-    ;
+;
 
-    export default feedReducer;
+export default feedReducer;

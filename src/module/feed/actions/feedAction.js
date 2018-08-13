@@ -55,7 +55,7 @@ export const fetchAllPosts = (dispatch) => {
 
 export const fetchMessagesData = () => {
     const url = "https://faghelg.herokuapp.com/messages";
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(itemsIsLoading(true));
         axios.get(url)
              .then((response) => {

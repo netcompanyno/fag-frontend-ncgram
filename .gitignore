@@ -23,3 +23,7 @@ chrome-user-data
 .vscode
 *.swp
 *.swo
+src/module/header/actions/
+src/module/header/components/
+src/module/header/reducer/
+src/module/header/types/

@@ -13,8 +13,7 @@ const CardItem = ({ itemData, loading, fetchData, addLike, addComment, updateCom
         {/*</span>*/}
         <h4 className={loading ? Classes.SKELETON : undefined}>{itemData.sender}: {itemData.content}</h4>
         {itemData.comments && itemData.comments.map(post =>
-                                                        <span key={uuid()}
-                                                              className="display_flex">
+                                                        <span key={uuid()} className="display_flex">
                                                             <p className={loading ? Classes.SKELETON : undefined}>
                                                                 <b>{post.shortName}:</b> {post.comment}</p>
                                                         </span>)}
