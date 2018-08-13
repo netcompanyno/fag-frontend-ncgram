@@ -18,7 +18,7 @@ test/the-files-to-test.generated.js
 chrome-user-data
 *.sublime-project
 *.sublime-workspace
-.idea
+/.idea
 *.iml
 .vscode
 *.swp
@@ -27,3 +27,4 @@ src/module/header/actions/
 src/module/header/components/
 src/module/header/reducer/
 src/module/header/types/
+
