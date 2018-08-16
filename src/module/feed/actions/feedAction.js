@@ -8,10 +8,13 @@ import {
     UPDATE_COMMENT
 } from '../types/feedTypes';
 
-export const receivePosts = json =>
+export const receivePosts = (firstList, restOfList) =>
     ({
         type : RECEIVE_POSTS,
-        payload : json
+        payload : {
+            firstList : firstList,
+            restOfList : restOfList
+        }
     });
 
 export const addLike = (id, icon) =>
@@ -59,11 +62,21 @@ export const fetchMessagesData = () => {
         dispatch(itemsIsLoading(true));
         axios.get(url)
              .then((response) => {
-                 const size = 20;
+                 const size = 50;
                  const data = response.data.slice(0, size);
-                 console.log("data", pagination(3, data));
 
-                 dispatch(receivePosts(data));
+                 const chunk = (arr, size) =>
+                     arr.reduce((acc, _, i) =>
+                                    (i % size)
+                                    ? acc
+                                    : [ ...acc, arr.slice(i, i + size) ]
+                         , []);
+                 const chunkedData = chunk(data, Math.round(data.length / 5));
+
+                 const firstChunk = chunkedData[ 0 ];
+                 chunkedData.shift();
+
+                 dispatch(receivePosts(firstChunk, chunkedData));
              })
              .catch(error => dispatch(itemsHasError(true, error)))
              .then(function() {
@@ -71,6 +84,10 @@ export const fetchMessagesData = () => {
              });
     };
 };
+
+export const goToNext = () => ({
+    type : 'GET_NEXT_INDEX',
+});
 
 function pagination(c, m) {
     let current = c,
@@ -82,7 +99,6 @@ function pagination(c, m) {
         rangeWithDots = [],
         l;
 
-    console.log("last",last);
     for (let i = 1; i <= last; i++) {
         if (i === 1 || i === last || (i >= left && i < right)) {
             range.push(i);

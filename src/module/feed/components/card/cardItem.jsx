@@ -1,33 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import uuid from "uuid";
 import { Button, Card, Classes, Elevation, Icon, Popover, PopoverInteractionKind, Position } from "@blueprintjs/core";
 import Image from "../image/image";
 import LikeHeart from "../likeHeart/likeHeart";
-import { Intent } from "@blueprintjs/core/lib/esm/index";
 
 const CardItem = ({ itemData, loading, fetchData, addLike, addComment, updateComment }) => (
-    <Card i={itemData.id} className="card" interactive={false} elevation={Elevation.FOUR}>
-        {/*<h2 className={loading && Classes.SKELETON}><b>{itemData.title}</b></h2>*/}
-        {/*<span className={loading && Classes.SKELETON}>*/}
+    <span>
+        <Card key={uuid()} i={itemData.id} className="card" interactive={false} elevation={Elevation.FOUR}>
         <Image imgSrc={itemData.imageUrl} loading={loading} />
-        {/*</span>*/}
         <h4 className={loading ? Classes.SKELETON : undefined}>{itemData.sender}: {itemData.content}</h4>
-        {itemData.comments && itemData.comments.map(post =>
-                                                        <span key={uuid()} className="display_flex">
-                                                            <p className={loading ? Classes.SKELETON : undefined}>
-                                                                <b>{post.shortName}:</b> {post.comment}</p>
-                                                        </span>)}
-        <span className={`display_flex flex_justify_space ${loading && Classes.SKELETON}`}>
+            {itemData.comments &&
+             itemData.comments.map(post =>
+                                       <span key={uuid()} className="display_flex">
+                <p className={loading ? Classes.SKELETON : undefined}>
+                    <b>{post.shortName}:</b> {post.comment}</p>
+            </span>)}
+            <span className={`display_flex flex_justify_space ${loading && Classes.SKELETON}`}>
                 <LikeHeart className={loading ? Classes.SKELETON : undefined}
                            id={itemData.id}
-                           statusList={itemData.statusList}
+                           statusList={itemData}
                            addLike={addLike} />
-                <Popover
-                    interactionKind={PopoverInteractionKind.CLICK}
-                    popoverClassName="bp3-popover-content-sizing"
-                    position={Position.TOP_RIGHT}
+                <Popover interactionKind={PopoverInteractionKind.CLICK}
+                         popoverClassName="bp3-popover-content-sizing"
+                         position={Position.TOP_RIGHT}
                 >
-                <Icon icon={"chat"} iconSize={30} intent={Intent.PRIMARY} />
+                <Icon icon={"chat"} iconSize={30} className={'comment_btn_colour'} />
                 <div>
                     <h5>Kommentar</h5>
                     <input type="text"
@@ -39,6 +37,25 @@ const CardItem = ({ itemData, loading, fetchData, addLike, addComment, updateCom
             </Popover>
         </span>
     </Card>
+    </span>
 );
+
+CardItem.propTypes = {
+    itemData : PropTypes.any,
+    loading : PropTypes.bool,
+    fetchData : PropTypes.func,
+    addLike : PropTypes.func,
+    addComment : PropTypes.func,
+    updateComment : PropTypes.func,
+};
+
+CardItem.defaultProps = {
+    itemData : {},
+    loading : false,
+    fetchData : undefined,
+    addLike : undefined,
+    addComment : undefined,
+    updateComment : undefined,
+};
 
 export default CardItem;

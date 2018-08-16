@@ -9,7 +9,7 @@ const Image = ({imgSrc, loading}) => {
     }
 
     return (
-        <div className={loading ? Classes.SKELETON : undefined}>
+        <div className={ loading ? Classes.SKELETON : undefined}>
             <img src={imageSource} className="image-size" alt="logo" />
         </div>
     );

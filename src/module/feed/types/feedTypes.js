@@ -4,4 +4,5 @@ export const FETCH_HAS_ERROR = 'FETCH_HAS_ERROR';
 export const ADD_LIKE = 'ADD_LIKE';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
+export const GET_NEXT_INDEX = 'GET_NEXT_INDEX';
 

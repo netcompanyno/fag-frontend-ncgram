@@ -8,13 +8,11 @@ const LikeHeart = ({ id, statusList, addLike }) => {
 
     // self running function
     (() => {
-        let array_elements = statusList;
+        const array_elements = statusList.statusList;
 
-        if (statusList.length <= 0) {
+        if (array_elements === undefined || array_elements.length <= 0) {
             return iconList.push({ "HEART" : 0 })
         }
-
-        // array_elements.sort();
 
         let current = null;
         let cnt = 0;
@@ -32,26 +30,15 @@ const LikeHeart = ({ id, statusList, addLike }) => {
         if (cnt > 0) {
             iconList.push({ [ current ] : cnt });
         }
-        console.log(iconList)
 
     })();
-
-    //
-    // console.log("reducer", count());
-    // console.log(Object.keys(iconList));
-    //
-    // iconList.map(item => console.log("kek", item));
-    //
-    // Object.keys(iconList).map(item => {
-    //     console.log("item", item.toLowerCase())
-    // });
 
     return (
         <div className="display_flex margin-right-20px margin-bottom-20px">
             {iconList.map(item =>
                               <div key={uuid()} className="display_flex margin-right-10px">
                                   <Icon icon={Object.keys(item)[ 0 ].toLowerCase()}
-                                        iconSize={30} intent={Intent.DANGER}
+                                        iconSize={30} className={'iconColor'}
                                         onClick={() => addLike(id, Object.keys(item)[ 0 ])} />
                                   <p className="margin-left-10px">{Object.values(item)}</p>
                               </div>

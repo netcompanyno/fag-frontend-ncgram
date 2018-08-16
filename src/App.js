@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import './App.css';
 import { connect } from "react-redux";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Feed from "./module/feed";
 import Header from "./module/header";
 import { fetchMessagesData } from "./module/feed/actions/feedAction";
+import './App.css';
 
 class App extends Component {
 
     componentWillMount() {
-        this.props.fetchMessagesData();
+        this.props.fetchData();
     }
 
     render() {
         return (
             <div className="App">
-                <Header />
+                <Header exact path="/" />
                 <div className="wrapper">
                     <Feed className="item1" />
                 </div>
@@ -23,10 +24,11 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+});
 
 const mapDispatchToProps = (dispatch) => ({
-        fetchMessagesData,
+    fetchData : () => dispatch(fetchMessagesData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
