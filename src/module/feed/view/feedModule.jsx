@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'uuid';
 import InfiniteScroll  from "react-infinite-scroll-component";
-import '../style/style.scss';
 import CardItem from "../components/card/cardItem";
 
 

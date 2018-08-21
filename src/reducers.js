@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import eksempelReducer from "./module/eksempel-module/reducer/eksempelReducer";
 import feedReducer from "./module/feed/reducer/feedReducer";
+import loginReducer from "./module/login/reducer/loginReducer";
 
 export const rootReducer = combineReducers({
-    eksempelReducer,
-    feedReducer
+    feedReducer,
+    loginReducer,
 });

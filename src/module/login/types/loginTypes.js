@@ -1,0 +1,4 @@
+export const START_LOGIN = 'START_LOGIN';
+export const UPDATE_USERNAME = 'UPDATE_USERNAME';
+export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
+export const LOG_IN_USER = 'LOG_IN_USER';

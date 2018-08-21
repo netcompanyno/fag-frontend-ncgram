@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alignment, Button, Navbar } from "@blueprintjs/core/";
-import '../style/style.scss';
+import { Link } from "react-router-dom";
 
 const headerModule = ({ }) => (
   <div className="header_text_colour">
@@ -10,10 +10,10 @@ const headerModule = ({ }) => (
         <Navbar.Divider />
         <Button className="bp3-minimal header_text_colour " icon="home" text="Home" />
         <Button className="bp3-minimal header_text_colour " icon="document" text="Files" />
+        <Link to={"/"} > ekeke</Link>
     </Navbar.Group>
     </Navbar>
   </div>
 );
 
 export default headerModule;
-

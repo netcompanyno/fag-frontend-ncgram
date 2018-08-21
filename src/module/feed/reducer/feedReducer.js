@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import {
     RECEIVE_POSTS,
     ITEMS_IS_LOADING,
@@ -16,7 +17,7 @@ const defaultState = {
     index : 0,
     hasMore: true,
     posts : [
-        [ {
+        {
             id : 992,
             title : "",
             content : "#done ",
@@ -46,53 +47,10 @@ const defaultState = {
                     messageId : 564,
                     person : {
                         fullName : "Thomas Pettersen",
-                        hortName : "thomasp",
-                        profileImageUrl : "https://s3-eu-west-1.amazonaws.com/faghelg/thomasp.png"
-                    },
-                    statusType : "STAR"
-                } ],
-            comments : [
-                {
-                    shortName : "daniels",
-                    comment : "blablabla"
-                }
-            ]
-        } ],
-
-        [ {
-            id : 992,
-            title : "",
-            content : "#done ",
-            sender : "vegarf",
-            imageUrl : "https://s3-eu-west-1.amazonaws.com/faghelg/aaa_image_d82cffbb-40b3-480a-9928-97ac30f89e22.png",
-            timestamp : "2018-04-28T12:26:31+0000",
-            statusList : [
-                {
-                    messageId : 564,
-                    person : {
-                        fullName : "Daniel Engen Sandén",
-                        shortName : "daniels",
-                        profileImageUrl : "https://s3-eu-west-1.amazonaws.com/faghelg/daniels.png"
-                    },
-                    statusType : "STAR"
-                },
-                {
-                    messageId : 564,
-                    person : {
-                        fullName : "Thomas Pettersen",
                         shortName : "thomasp",
                         profileImageUrl : "https://s3-eu-west-1.amazonaws.com/faghelg/thomasp.png"
                     },
                     statusType : "STAR"
-                },
-                {
-                    messageId : 564,
-                    person : {
-                        fullName : "Thomas Pettersen",
-                        hortName : "thomasp",
-                        profileImageUrl : "https://s3-eu-west-1.amazonaws.com/faghelg/thomasp.png"
-                    },
-                    statusType : "STAR"
                 } ],
             comments : [
                 {
@@ -100,7 +58,7 @@ const defaultState = {
                     comment : "blablabla"
                 }
             ]
-        } ],
+        }
     ],
 };
 
@@ -152,16 +110,24 @@ const feedReducer = (state = defaultState, action) => {
             case
             ADD_LIKE: {
                 const test = { ...getPost(state, action.id) };
-
+                console.log(Cookies.get('username'));
                 test.statusList = [ ...test.statusList, {
                     messageId : 546,
                     person : {
                         fullName : "Thomas Pettersen",
-                        shortName : "thomasp",
+                        shortName : Cookies.get('username'),
                         profileImageUrl : "https://s3-eu-west-1.amazonaws.com/faghelg/thomasp.png"
                     },
                     statusType : action.icon
                 } ];
+
+                const kek = state.posts.map(item => {
+                    return item.statusList.map(item2 => {
+                        return item2.person.shortName === Cookies.get('username')
+                    })
+                });
+
+                console.log(kek);
 
                 const updatedPosts = insertIntoPost(state.posts, test);
                 return {

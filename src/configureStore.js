@@ -2,13 +2,16 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'
 import freeze from 'redux-freeze';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { rootReducer } from './reducers';
 
-export default function configureStore() {
-    const middleware = [thunk, freeze];
+const configureStore = (history) => {
+    const middleware = [ thunk, routerMiddleware(history)  ];
     return createStore(
-        rootReducer,
-          composeWithDevTools(
-          applyMiddleware(...middleware)),
+        connectRouter(history)(rootReducer),
+        composeWithDevTools(
+            applyMiddleware(...middleware)),
     );
-}
+};
+
+export default configureStore;

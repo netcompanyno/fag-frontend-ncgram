@@ -1,25 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import 'whatwg-fetch';
-import './index.scss';
+import { Provider } from 'react-redux';
+import { createBrowserHistory } from "history";
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-
-import { Provider } from 'react-redux';
 import configureStore from './configureStore';
+import './index.scss';
 
-const store = configureStore();
+const history = createBrowserHistory();
+const store = configureStore(history);
 
-ReactDOM.render((
-                    <Provider store={store}>
-                        <Router>
-                            <div>
-                                <Route exact path="/" component={App} />
-                                <Route exact path="/test" component={App} />
-                            </div>
-                        </Router>
-                    </Provider>
-                ), document.getElementById('root'));
+ReactDOM.render((<Provider store={store}>
+                        <App history={history} />
+                    </Provider>), document.getElementById('root'));
 registerServiceWorker();
-

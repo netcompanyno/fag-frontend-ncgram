@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Intent } from "@blueprintjs/core";
+import { Icon } from "@blueprintjs/core";
 import uuid from 'uuid';
 
 const LikeHeart = ({ id, statusList, addLike }) => {
@@ -37,12 +37,12 @@ const LikeHeart = ({ id, statusList, addLike }) => {
         <div className="display_flex margin-right-20px margin-bottom-20px">
             {iconList.map(item =>
                               <div key={uuid()} className="display_flex margin-right-10px">
+                                  {console.log()}
                                   <Icon icon={Object.keys(item)[ 0 ].toLowerCase()}
-                                        iconSize={30} className={'iconColor'}
+                                        iconSize={30} className={Object.values(item)[0] !== 0 ? 'iconColor': 'icon-color-grey'}
                                         onClick={() => addLike(id, Object.keys(item)[ 0 ])} />
                                   <p className="margin-left-10px">{Object.values(item)}</p>
-                              </div>
-            )}
+                              </div>)}
         </div>
     );
 };

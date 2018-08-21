@@ -1,13 +1,39 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
 @import "~@blueprintjs/core/lib/css/blueprint.css";
 @import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+@import "variables";
 @import "module/feed/style/style";
+@import "module/header/style/style";
+@import "module/login/style/style";
 
-body {
+html, body {
   margin: 0;
   padding: 0;
+  min-height: 100%;
   font-family: 'Roboto Slab', serif;
-
+  //background: radial-gradient(
+  //                $NC-sec-green 40px,
+  //                transparent 0,
+  //                transparent 100%
+  //),
+  //radial-gradient(
+  //                $NC-sec-yellow 40px,
+  //                transparent 0,
+  //                transparent 100%
+  //),
+  //radial-gradient(
+  //                $NC-sec-blue 40px,
+  //                transparent 0,
+  //                transparent 100%
+  //), #ffffff;
+  //background-blend-mode: multiply;
+  //background-size: 100px 100px;
+  //background-position: 0 0, 33px 33px, -33px -33px;
+  background:
+          linear-gradient($NC-sec-blue, transparent),
+          linear-gradient(to top left, $NC-sec-green, transparent),
+          linear-gradient(to top right, $NC-sec-yellow, transparent);
+  background-blend-mode: screen;
 }
 
 .wrapper {
@@ -16,11 +42,21 @@ body {
   //background-color: cornflowerblue;
   margin-left: auto;
   margin-right: auto;
-  padding: 50px;
-  width: 50%;
+  padding-top: 50px;
+  width: 55%;
 }
 
 .item1 {
   align-self: center;
+}
+
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
 }
 

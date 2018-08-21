@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Feed from "./module/feed";
-import Header from "./module/header";
 import { fetchMessagesData } from "./module/feed/actions/feedAction";
 import './App.css';
+import { ConnectedRouter } from "connected-react-router";
+import Routes from "./routes";
 
 class App extends Component {
 
     componentWillMount() {
-        this.props.fetchData();
+        localStorage.setItem('user', 'Tom');
+        console.log(localStorage.getItem('user'));
+        //this.props.fetchData();
     }
 
     render() {
         return (
             <div className="App">
-                <Header exact path="/" />
-                <div className="wrapper">
-                    <Feed className="item1" />
-                </div>
+                <ConnectedRouter history={this.props.history}>
+                    <div>
+                        <Routes history={this.props.history}/>
+                    </div>
+                </ConnectedRouter>
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
-});
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
     fetchData : () => dispatch(fetchMessagesData()),

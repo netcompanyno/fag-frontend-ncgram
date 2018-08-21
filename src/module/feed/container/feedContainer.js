@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import feedModule from '../view/feedModule';
-import { fetchAllPosts, fetchMessagesData, addLike, addComment, updateComment, goToNext } from '../actions/feedAction';
+import { fetchMessagesData, addLike, addComment, updateComment, goToNext } from '../actions/feedAction';
 
 const mapStateToProps = (state, ownProps) => ({
     loading: state.feedReducer.isLoading,
