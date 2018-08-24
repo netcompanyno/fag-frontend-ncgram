@@ -5,7 +5,9 @@ import {
     FETCH_HAS_ERROR,
     ADD_LIKE,
     ADD_COMMENT,
-    UPDATE_COMMENT, GET_NEXT_INDEX
+    UPDATE_COMMENT,
+    GET_NEXT_INDEX,
+    HOVER_THAT_ICON
 } from "../types/feedTypes";
 import { getPost, insertIntoPost } from "../utilities/posts";
 
@@ -16,6 +18,7 @@ const defaultState = {
     commentHolder : "",
     index : 0,
     hasMore: true,
+    hoverOverIcon: false,
     posts : [
         {
             id : 992,
@@ -153,6 +156,13 @@ const feedReducer = (state = defaultState, action) => {
                 return {
                     ...state,
                     commentHolder : action.payload
+                }
+            }
+
+            case HOVER_THAT_ICON: {
+                return {
+                    ...state,
+                    hoverOverIcon: !state.hoverOverIcon
                 }
             }
 

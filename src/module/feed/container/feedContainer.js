@@ -11,13 +11,12 @@ const mapStateToProps = (state, ownProps) => ({
     hasMore: state.feedReducer.hasMore
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
     fetchData : () => dispatch(fetchMessagesData()),
     addLike : (id, icon) => dispatch(addLike(id, icon)),
     updateComment: (comment) => dispatch(updateComment(comment)),
     addComment: (id) => dispatch(addComment(id)),
-    goToNextIndex: () => dispatch(goToNext())
-
+    goToNextIndex: () => dispatch(goToNext()),
 });
 
 const FeedContainer = connect(mapStateToProps, mapDispatchToProps)(feedModule);

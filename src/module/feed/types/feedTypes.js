@@ -5,4 +5,5 @@ export const ADD_LIKE = 'ADD_LIKE';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const GET_NEXT_INDEX = 'GET_NEXT_INDEX';
+export const HOVER_THAT_ICON = 'HOVER_THAT_ICON';
 

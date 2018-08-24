@@ -9,7 +9,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  min-height: 100%;
+  height: 100%;
   font-family: 'Roboto Slab', serif;
   //background: radial-gradient(
   //                $NC-sec-green 40px,
@@ -36,14 +36,17 @@ html, body {
   background-blend-mode: screen;
 }
 
+#root {
+  height: 100%;
+}
 .wrapper {
   display: grid;
   grid-gap: 20px;
   //background-color: cornflowerblue;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 50px;
-  width: 55%;
+  padding: 50px;
+  width: 50%;
 }
 
 .item1 {
@@ -60,3 +63,10 @@ html, body {
   transition: opacity 250ms ease-in;
 }
 
+.route-wrapper {
+  position: relative;
+}
+
+.route-wrapper > div {
+  position: absolute;
+}

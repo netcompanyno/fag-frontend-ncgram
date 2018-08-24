@@ -6,11 +6,10 @@ import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { rootReducer } from './reducers';
 
 const configureStore = (history) => {
-    const middleware = [ thunk, routerMiddleware(history)  ];
+    const middleware = [ thunk, routerMiddleware(history), freeze ];
     return createStore(
         connectRouter(history)(rootReducer),
-        composeWithDevTools(
-            applyMiddleware(...middleware)),
+        composeWithDevTools(applyMiddleware(...middleware)),
     );
 };
 

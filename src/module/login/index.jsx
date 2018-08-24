@@ -2,8 +2,8 @@ import React from 'react';
 import LoginContainer from "./container/loginContainer";
 
 const Login = () =>
-    (<span className={'login-container'}>
+    (<div className={'main'}>
         <LoginContainer />
-    </span>);
+    </div>);
 
 export default Login;

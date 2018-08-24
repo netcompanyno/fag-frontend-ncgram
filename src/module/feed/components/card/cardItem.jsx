@@ -5,22 +5,24 @@ import { Button, Card, Classes, Elevation, Icon, Popover, PopoverInteractionKind
 import Image from "../image/image";
 import LikeHeart from "../likeHeart/likeHeart";
 
-const CardItem = ({ itemData, loading, fetchData, addLike, addComment, updateComment }) => (
+const CardItem = ({ ...props, itemData }) => (
     <span>
         <Card key={uuid()} i={itemData.id} className="card" interactive={false} elevation={Elevation.FOUR}>
-        <Image imgSrc={itemData.imageUrl} loading={loading} />
-        <h4 className={loading ? Classes.SKELETON : undefined}>{itemData.sender}: {itemData.content}</h4>
+        <Image imgSrc={itemData.imageUrl} loading={props.loading} />
+        <h4 className={props.loading ? Classes.SKELETON : undefined}>{itemData.sender}: {itemData.content}</h4>
             {itemData.comments &&
              itemData.comments.map(post =>
                                        <span key={uuid()} className="display_flex">
-                <p className={loading ? Classes.SKELETON : undefined}>
+                <p className={props.loading ? Classes.SKELETON : undefined}>
                     <b>{post.shortName}:</b> {post.comment}</p>
             </span>)}
-            <span className={`display_flex flex_justify_space ${loading && Classes.SKELETON}`}>
-                <LikeHeart className={loading ? Classes.SKELETON : undefined}
+            <span className={`display_flex flex_justify_space ${props.loading && Classes.SKELETON}`}>
+                <LikeHeart className={props.loading ? Classes.SKELETON : undefined}
                            id={itemData.id}
                            statusList={itemData}
-                           addLike={addLike} />
+                           addLike={props.addLike}
+                           hoverOverIconBool={props.overOverIcon}
+                           hoverOverThatIcon={props.hoverOverThatIcon}/>
                 <Popover interactionKind={PopoverInteractionKind.CLICK}
                          popoverClassName="bp3-popover-content-sizing"
                          position={Position.TOP_RIGHT}
@@ -31,8 +33,8 @@ const CardItem = ({ itemData, loading, fetchData, addLike, addComment, updateCom
                     <input type="text"
                            className="bp3-input"
                            placeholder="comment..."
-                           onChange={(e) => updateComment(e.target.value)} />
-                    <Button className="bp3-popover-dismiss" onClick={() => addComment(itemData.id)}>Add</Button>
+                           onChange={(e) => props.updateComment(e.target.value)} />
+                    <Button className="bp3-popover-dismiss" onClick={() => props.addComment(itemData.id)}>Add</Button>
                 </div>
             </Popover>
         </span>

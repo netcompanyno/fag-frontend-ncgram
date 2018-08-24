@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon } from "@blueprintjs/core";
 import uuid from 'uuid';
 
-const LikeHeart = ({ id, statusList, addLike }) => {
+const LikeHeart = ({ id, statusList, addLike, hoverOverThatIcon, hoverOverIconBool }) => {
 
     let iconList = [];
 
@@ -36,10 +36,14 @@ const LikeHeart = ({ id, statusList, addLike }) => {
     return (
         <div className="display_flex margin-right-20px margin-bottom-20px">
             {iconList.map(item =>
-                              <div key={uuid()} className="display_flex margin-right-10px">
-                                  {console.log()}
-                                  <Icon icon={Object.keys(item)[ 0 ].toLowerCase()}
-                                        iconSize={30} className={Object.values(item)[0] !== 0 ? 'iconColor': 'icon-color-grey'}
+                              <div key={uuid()} className="display_flex margin-right-10px hover-test">
+                                  <Icon onMouseEnter={(e) => console.log(e.target)}
+                                        onMouseLeave={() => hoverOverThatIcon()}
+                                        iconSize={hoverOverIconBool ? Icon.SIZE_LARGE : Icon.SIZE_STANDARD}
+                                        icon={Object.keys(item)[ 0 ].toLowerCase()}
+                                        className={Object.values(item)[ 0 ] !== 0 ?
+                                                   'iconColor' :
+                                                   'icon-color-grey'}
                                         onClick={() => addLike(id, Object.keys(item)[ 0 ])} />
                                   <p className="margin-left-10px">{Object.values(item)}</p>
                               </div>)}

@@ -3,6 +3,7 @@ import {
     ADD_COMMENT,
     ADD_LIKE,
     FETCH_HAS_ERROR,
+    HOVER_THAT_ICON,
     ITEMS_IS_LOADING,
     RECEIVE_POSTS,
     UPDATE_COMMENT
@@ -62,9 +63,7 @@ export const fetchMessagesData = () => {
         dispatch(itemsIsLoading(true));
         axios.get(url)
              .then((response) => {
-                 const size = 50;
-                 const data = response.data.slice(0, size);
-
+                 const data = response.data;
                  const chunk = (arr, size) =>
                      arr.reduce((acc, _, i) =>
                                     (i % size)
@@ -85,6 +84,12 @@ export const fetchMessagesData = () => {
     };
 };
 
-export const goToNext = () => ({
-    type : 'GET_NEXT_INDEX',
-});
+export const goToNext = () =>
+    ({
+        type : 'GET_NEXT_INDEX',
+    });
+
+export const pulsThatIcon = () =>
+    ({
+        type: HOVER_THAT_ICON
+    });

@@ -2,7 +2,7 @@ import React from 'react';
 import { FormGroup, InputGroup, Intent, Button } from "@blueprintjs/core/";
 
 const LoginView = ({ ...props }) => (
-    <div>
+    <div className={'block'}>
         <FormGroup
             helperText="Helper text with details..."
             label="Username"
