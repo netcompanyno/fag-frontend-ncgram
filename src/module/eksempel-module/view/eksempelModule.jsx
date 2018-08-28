@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../style/style.css';
+import '../style/style.scss';
 
 const EksempelModule = ({ title, description, clickEvent }) => (
   <div className="card">
